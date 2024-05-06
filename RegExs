@@ -1,0 +1,13 @@
+RuleID      RegEx (PCRE2)
+R-01    Cipher\.getInstance\((“|&quot)(DES|DESede|RC2|RC4|RC5|Blowfish|ChaCha20)
+R-02-a  Cipher\.getInstance\“(?:AES|DES|DESede|RC2|RC4|RC5|Blowfish|ChaCha20)(?:\/ECB)?”|Cipher\.getInstance\(&quot;(?:AES|DES|DESede|RC2|RC4|RC5|Blowfish|ChaCha20)(?:\/ECB)?&quot;
+R-02-b  Cipher\.getInstance\(“(?:AES|DES|DESede|RC2|RC4|RC5|Blowfish|ChaCha20)\/CBC|Cipher\.getInstance\(&quot;(?:AES|DES|DESede|RC2|RC4|RC5|Blowfish|ChaCha20)\/CBC
+R-03-a  (?:key\s* = |secret\s* ̄)(?:"|&quot;|{|new byte\[\]\{)|SecretKeySpec\(“
+R-03-b  PBEKeySpec\(\s*\S+\s*,\s*"\S+"\s*,\s*\S+\s*|PBEParameterSpec\(“|salt\s* ̄(?:“|&quot;|{|new byte\[\]\{)
+R-03-c  (salt\s*=|PBEKeySpec\(|PBEParameterSpec\() → check the size of salt.
+R-03-d  PBEKeySpec\(\s*\S+\s*,\s*\S+\s*,[1-9]\d{0,2}|PBEParameterSpec\(\s*\S+\s*,[1-9]\d{0,2}|salt\s*= →examine if the Iteration Count value is less than 1000.
+R-03-e  (?:password\s* ̄|pass\s* ̄)(?:“|&quot;)|PBEKeySpec\("
+R-03-f  kgenerator\.init\(\d+,\s*\w+\) → assess how the random value, i.e., the second parameter, is generated.
+R-03-g  SecretKeyFactory\.getInstance\((?:“PBEWithMD5AndDES”|“PBKDF2WithHmacSHA1”)|MessageDigest\.getInstance\(“SHA-1”\N*\n*\N*\n*\N*.digest\(Key
+R-04    (IV\s* ̄|InitVector\s* =|InitializationVector\s* =|IVparameterSpec\()\s*(?:“|&quot;|{|new byte\[\]\s*{)
+R-05    KeyStore\.load\( → examine whether the password, i.e., the second parameter, is hard-coded.
