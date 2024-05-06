@@ -1,1 +1,1 @@
-# SymmetricEncryptionChallenges
+# Symmetric Encryption Challenges
