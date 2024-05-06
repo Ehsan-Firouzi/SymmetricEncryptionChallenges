@@ -1,0 +1,61 @@
+﻿id,Id,TEInstant,TEInit,TEEncDec,TETrans,REFr_compatibility,RERel,REPor,REInerop,RESecur,RESpace,CreationDate,column13,AcceptedAnswerId,Body,PostTypeId,R1,R2a,R2b,R3a,R3b,R3c,R3d,R3e,R3f,R3g,R4a,R4b,R5,AASolved
+74601513,74601513,NULL,key derivation,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2022,74602441,"<p>I'm trying to decrypt a token that the server I'm using brings in order to load correctly users access to the page.</p>
+<p>I already achieved the goal using CryptoJs using JavaScript. However now I need to transfer that function to my java backend.</p>
+<p>Look my code using CryptoJs which works correctly</p>
+<pre class=""lang-js prettyprint-override""><code>const token = &quot;U2FsdGVkX1+6YueVRKp6h0dZfk/a8AC9vyFfAjxD4nb7mXsKrM7rI7xZ0OgrF1sShHYNLMJglz4+67n/I7P+fg==&quot;
+const key = &quot;p80a0811-47db-2c39-bcdd-4t3g5h2d5d1a&quot;
+
+// Decrypt
+const iv = CryptoJS.enc.Utf8.parse(key);
+const decryptedToken = CryptoJS.AES.decrypt(token, key, {
+  keySize: 16,
+  iv,
+  mode: CryptoJS.mode.CBC,
+  padding: CryptoJS.pad.Pkcs7,
+});
+
+const stringToken = decryptedToken.toString(CryptoJS.enc.Utf8);
+const dataToUse = JSON.parse(stringToken)
+
+console.log(&quot;decryptedToken =&gt; &quot;, stringToken);
+console.log(&quot;data =&gt; &quot;,dataToUse);
+</code></pre>
+<p>And this is my code in Java using javax.crypto</p>
+<pre class=""lang-java prettyprint-override""><code>public String decrypt() {
+  String finalToken = null;
+  Cipher cipher;
+  try {
+    String token = &quot;U2FsdGVkX1+6YueVRKp6h0dZfk/a8AC9vyFfAjxD4nb7mXsKrM7rI7xZ0OgrF1sShHYNLMJglz4+67n/I7P+fg==&quot;;
+    String key = &quot;p80a0811-47db-2c39-bcdd-4t3g5h2d5d1a&quot;;
+    Key skeySpec = new SecretKeySpec(Arrays.copyOf(key.getBytes(), 16), &quot;AES&quot;);
+    byte[] iv = Arrays.copyOf(key.getBytes(StandardCharsets.UTF_8), 16);
+    IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
+    byte[] bytesToDecrypt = Base64.decodeBase64(token.getBytes());
+    cipher = Cipher.getInstance(&quot;AES/CBC/PKCS7Padding&quot;);
+    cipher.init(Cipher.DECRYPT_MODE, skeySpec, ivParameterSpec);
+    byte[] decrypted = cipher.doFinal(bytesToDecrypt);
+    finalToken = new String(decrypted);
+    log.info(&quot;Decrypt token succesfully {}&quot;, finalToken);
+  } catch (NoSuchAlgorithmException
+      | InvalidAlgorithmParameterException
+      | IllegalBlockSizeException
+      | NoSuchPaddingException
+      | BadPaddingException
+      | InvalidKeyException e) {
+    e.printStackTrace();
+    log.error(&quot;Error decrypting&quot;);
+  }
+
+  return finalToken;
+}
+</code></pre>
+<p>I'm not sure I'm setting correctly the key and the iv. With the piece of code above I get this error:</p>
+<blockquote>
+<p>javax.crypto.BadPaddingException: pad block corrupted</p>
+</blockquote>
+<p>If I don't &quot;cut&quot; the key and the iv in order to have 16 bytes I get wrong length error.</p>
+<p>Can someone help me to figure out what's wrong please!</p>
+<p>The expected result is to get this info in java so then I can manipulate the object:</p>
+<pre class=""lang-json prettyprint-override""><code>{name: &quot;Burak&quot;, surName: &quot;Bayraktaroglu&quot;}
+</code></pre>
+",1,NULL,NULL,y,y,NULL,NULL,NULL,NULL,NULL,NULL,NULL,y(key as IV),NULL,NULL

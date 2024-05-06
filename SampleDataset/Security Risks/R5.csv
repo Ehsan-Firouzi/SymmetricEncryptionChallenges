@@ -1,0 +1,3 @@
+﻿Id,(No column name),AcceptedAnswerId,PostTypeId
+27729937,"keyStore.load(fis, ""java0123"".toCharArray());              
+        Key secKey = keyStore.getKey(""mySecret"",""www-secret""",0,1
