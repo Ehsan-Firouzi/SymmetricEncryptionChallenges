@@ -1,5 +1,4 @@
-# Time to Separate from StackOverflow and Match with ChatGPT for
-Encryption
+# Time to Separate from StackOverflow and Match with ChatGPT for Encryption
 
 We gathered our data from SO Data Dump released on March 2023.
 
