@@ -1,4 +1,5 @@
-# Time for a Stack divorce and finding a coding partner for encryption
+# Time to Separate from StackOverflow and Match with ChatGPT for
+Encryption
 
 We gathered our data from SO Data Dump released on March 2023.
 
