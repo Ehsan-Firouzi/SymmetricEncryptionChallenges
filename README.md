@@ -1,6 +1,6 @@
 # Time to Separate from StackOverflow and Match with ChatGPT for Encryption
 
-https://arxiv.org/pdf/2406.06164
+Paper Link: https://arxiv.org/pdf/2406.06164
 
 We gathered our data from SO Data Dump released on March 2023.
 
